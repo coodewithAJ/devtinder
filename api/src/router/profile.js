@@ -24,14 +24,14 @@ router.patch("/update", userAuth, async (req, res) => {
     const isEditAllowed = Object.keys(req.body).every((key) =>
       allowedEditFields.includes(key)
     );
-    console.log(isEditAllowed)
+    console.log(isEditAllowed);
     if (!isEditAllowed) {
       throw new Error("Edit not allowed");
     }
 
-    req.user = {...req.user, ...req.body}
+    req.user = { ...req.user, ...req.body };
 
-    console.log(req.user)
+    console.log(req.user);
     await User.findOneAndUpdate(
       { emailId: req.user.emailId },
       { ...req.body },
@@ -44,13 +44,13 @@ router.patch("/update", userAuth, async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(err);
   }
 });
 
 router.get("/view", userAuth, async (req, res) => {
   try {
-    res.send(req.user);
+    res.status(200).send({ user: req.user });
   } catch (err) {
     res.status(500).send("Something went wrong");
   }
