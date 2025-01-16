@@ -28,7 +28,7 @@ router.post("/login", async (req, res) => {
 
     const isPasswordValid = await bcrypt.compare(password, dbUser.password);
     if (!isPasswordValid) {
-      return res.send("Invalid credentials");
+      return res.status(401).send("Invalid credentials");
     }
     const token = await dbUser.getJwtToken();
     res.cookie("token", token);
@@ -39,6 +39,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/logout", (req, res) => {
+  console.log("---------------")
   res.cookie("token", null, {
     expires: new Date(Date.now()),
   });
