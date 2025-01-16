@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
+const cors = require("cors")
 const jwt = require("jsonwebtoken");
 const { connectToDB } = require("./config/dbConnection");
 const { adminAuth, userAuth } = require("./middlewares/auth");
@@ -12,6 +13,10 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials:true
+}))
 
 app.use("/auth", authRouter);
 app.use("/profile", profileRouter);
