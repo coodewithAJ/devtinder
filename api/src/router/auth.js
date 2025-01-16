@@ -1,5 +1,5 @@
 const express = require("express");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const { signupValidation, encryptPassword } = require("../utils/authValidate");
 const User = require("../models/user");
 const router = express.Router();
@@ -10,7 +10,6 @@ router.post("/signup", async (req, res) => {
     let hashedPassword = await encryptPassword(req.body?.password);
     console.log({ ...req.body, password: hashedPassword });
     const newUser = new User({ ...req.body, password: hashedPassword });
-
     await newUser.save();
     res.send("user added to db succesfully ");
   } catch (err) {
@@ -33,9 +32,9 @@ router.post("/login", async (req, res) => {
     }
     const token = await dbUser.getJwtToken();
     res.cookie("token", token);
-    res.send("Login sucessfully !!");
+    res.status(200).send({ user: dbUser });
   } catch (err) {
-    res.send("Error: ", err.message);
+    res.status(500).send({ "Error: ": err.message });
   }
 });
 
