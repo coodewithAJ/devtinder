@@ -21,9 +21,10 @@ const Feed = () => {
   useEffect(() => {
     getFeedData();
   }, []);
+  if(feed?.length <=0) return <h2 className="my-10 card-title flex justify-center text-2xl">No new users found</h2>
   return (
     feed && (
-      <div className="flex justify-center items-center my-3">
+      <div className="flex justify-evenly flex-wrap items-center my-3">
         {feed?.map((user) => {
           return <UserCard user={user} key={user._id} />;
         })}
