@@ -21,7 +21,7 @@ const Body = () => {
       if (err.status === 401) {
         navigate("/login");
       }
-      console.eroor(err.message);
+      console.error(err.message);
     }
   };
   useEffect(() => {

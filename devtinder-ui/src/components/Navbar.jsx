@@ -5,7 +5,8 @@ import axios from "axios";
 import { removeUser } from "../redux/userSlice";
 
 const Navbar = () => {
-  const user = useSelector((store) => store.user);
+  const user = useSelector((store) => store?.user);
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const hanldeLogout = async () => {
@@ -19,6 +20,7 @@ const Navbar = () => {
       return navigate("/login");
     } catch (err) {
       console.error(err);
+      
     }
   };
   return (
@@ -41,7 +43,7 @@ const Navbar = () => {
                 role="button"
                 className="btn btn-ghost"
               >
-                <p className="uppercase">{user?.user?.firstName}</p>
+                <p className="uppercase">🧑{user?.firstName}</p>
               </div>
               <ul
                 tabIndex={0}
@@ -53,7 +55,7 @@ const Navbar = () => {
                     className="justify-between"
                   >
                     Profile
-                    <span className="badge">New</span>
+                    
                   </Link>
                 </li>
                 <li>

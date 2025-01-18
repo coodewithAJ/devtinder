@@ -8,6 +8,7 @@ import store from "./redux/appStore";
 import Profile from "./components/Profile";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
+import Signup from "./components/Signup";
 function App() {
   return (
 
@@ -21,6 +22,10 @@ function App() {
             <Route
               path="/login"
               element={<Login />}
+            />
+             <Route
+              path="/signup"
+              element={<Signup />}
             />
             <Route
               path="/feed"

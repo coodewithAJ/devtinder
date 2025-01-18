@@ -8,12 +8,13 @@ router.post("/signup", async (req, res) => {
   try {
     signupValidation(req);
     let hashedPassword = await encryptPassword(req.body?.password);
-    console.log({ ...req.body, password: hashedPassword });
     const newUser = new User({ ...req.body, password: hashedPassword });
-    await newUser.save();
-    res.send("user added to db succesfully ");
+    const savedUser = await newUser.save();
+    const token = await savedUser.getJwtToken();
+    res.cookie("token", token);
+    res.status(200).send({message:"user added to db succesfully ",data:savedUser});
   } catch (err) {
-    res.send("Error while adding user to db " + err.message);
+    res.status(500).send(err.message);
   }
 });
 
@@ -39,7 +40,6 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/logout", (req, res) => {
-  console.log("---------------")
   res.cookie("token", null, {
     expires: new Date(Date.now()),
   });

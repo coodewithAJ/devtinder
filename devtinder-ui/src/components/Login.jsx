@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/userSlice";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { BASE_URL } from "../constants/constant";
 
 const Login = () => {
@@ -21,7 +21,8 @@ const Login = () => {
         },
         { withCredentials: true }
       );
-      dispatch(addUser(res.data));
+      
+      dispatch(addUser(res?.data?.user));
       navigate("/feed");
     } catch (err) {
       setLoginError(err?.response?.data || "Something went wrong");
@@ -49,7 +50,7 @@ const Login = () => {
               <span className="label-text">Password</span>
             </div>
             <input
-              type="text"
+              type="password"
               className="input input-bordered w-full max-w-xs"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -62,6 +63,8 @@ const Login = () => {
           >
             Login
           </button>
+          <p>OR</p>
+          <p>Don't have an account? <Link to="/signup" className="underline text-red-400">Create Account</Link> </p> 
         </div>
       </div>
     </>
